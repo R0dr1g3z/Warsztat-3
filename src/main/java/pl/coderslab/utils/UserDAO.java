@@ -18,6 +18,8 @@ public class UserDAO {
             "DELETE FROM users WHERE id=?;";
     private static final String READALL_USER_QUERY =
             "SELECT * FROM users;";
+    private static final String FIND_ALL_USERS_QUERY =
+            "SELECT * FROM users";
 
     public void create(User user) {
         try (Connection connection = DBUtil.getConnection()) {
@@ -92,10 +94,33 @@ public class UserDAO {
             return users;
         } catch (SQLException throwables) {
             return null;
-
-
         }
     }
+    public User[] findAll() {
+        try (Connection conn = DBUtil.getConnection()) {
+            User[] users = new User[0];
+            PreparedStatement statement = conn.prepareStatement(FIND_ALL_USERS_QUERY);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                users = addToArray(user, users);
+            }
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private User[] addToArray(User u, User[] users) {
+        User[] tmpUsers = Arrays.copyOf(users, users.length + 1); // Tworzymy kopię tablicy powiększoną o 1.
+        tmpUsers[users.length] = u; // Dodajemy obiekt na ostatniej pozycji.
+        return tmpUsers; // Zwracamy nową tablicę.
+    }
+
 
     public String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
