@@ -10,11 +10,21 @@
             <h6 class="m-0 font-weight-bold text-primary">Dodaj uzytkownika</h6>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table">
-
-                </table>
-            </div>
+                    <form method="post">
+                        <div class="form-group">
+                            Nazwa:
+                            <input name="username" type="text" class="form-control" placeholder="Nazwa Uzytkownika">
+                        </div>
+                        <div class="form-group">
+                            Email:
+                            <input name="email" type="text" placeholder="Email Uzytkownika" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            Haslo:
+                            <input name="pass" type="password" class="form-control" placeholder="Haslo Uzytkownika">
+                        </div>
+                        <button class="btn btn-success">Zapisz</button>
+                    </form>
         </div>
     </div>
 </div>
