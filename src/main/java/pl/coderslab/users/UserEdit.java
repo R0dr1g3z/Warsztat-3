@@ -14,13 +14,12 @@ import java.io.IOException;
 public class UserEdit extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = new User();
-        user.setId(Integer.parseInt(request.getParameter("id")));
-        user.setUsername(request.getParameter("userName"));
-        user.setEmail(request.getParameter("userEmail"));
-        user.setPassword(request.getParameter("userPassword"));
+        user.setUsername(request.getParameter("username"));
+        user.setEmail(request.getParameter("email"));
+        user.setPassword(request.getParameter("pass"));
         UserDAO userDao = new UserDAO();
-        userDao.update(user,user.getId());
-        response.sendRedirect(request.getContextPath() + "/user/list");
+        userDao.update(user,Integer.parseInt(request.getParameter("id")));
+        response.sendRedirect("/user/list");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
